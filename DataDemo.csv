@@ -1,0 +1,201 @@
+Employee_ID,Age,Gender,Department,Years_at_Company,Work_Hours_Per_Week,Remote_Status,Screening_Stress_Level,Screening_Sleep_Quality,Screening_Work_Life_Balance,Screening_Anxiety_Frequency,Screening_Overwhelmed_Frequency,Requires_Intervention
+EMP_001,50,Male,Sales,12,51,Hybrid,4,1,5,4,4,0
+EMP_002,36,Female,Sales,13,37,Hybrid,5,2,4,3,2,0
+EMP_003,29,Female,Operations,13,54,Hybrid,2,3,2,5,1,1
+EMP_004,42,Female,Sales,14,49,Hybrid,5,5,3,4,2,1
+EMP_005,40,Female,HR,3,49,Full-time Remote,3,5,4,2,3,0
+EMP_006,44,Male,Engineering,13,58,Full-time Remote,1,1,1,2,4,0
+EMP_007,32,Female,Marketing,6,56,Hybrid,3,1,1,1,2,0
+EMP_008,32,Female,Sales,2,48,Hybrid,2,3,4,5,1,0
+EMP_009,45,Male,Finance,3,57,Hybrid,4,4,4,4,2,1
+EMP_010,57,Male,Sales,5,48,Hybrid,5,2,4,2,5,0
+EMP_011,45,Non-binary,Finance,9,58,Hybrid,1,1,1,5,1,0
+EMP_012,24,Female,HR,2,36,Full-time Remote,5,5,1,1,3,1
+EMP_013,43,Male,Finance,10,47,On-site,2,3,4,3,4,0
+EMP_014,23,Non-binary,Marketing,8,48,Hybrid,5,2,5,5,2,1
+EMP_015,45,Non-binary,Engineering,14,58,Hybrid,1,3,5,5,1,0
+EMP_016,51,Female,Finance,2,53,Hybrid,2,2,2,3,5,0
+EMP_017,59,Female,Finance,11,41,On-site,5,2,3,5,1,1
+EMP_018,23,Male,Engineering,13,37,Hybrid,4,1,5,1,5,0
+EMP_019,42,Male,Marketing,5,49,Hybrid,2,3,1,1,3,0
+EMP_020,54,Female,Sales,7,57,Hybrid,2,3,5,3,4,0
+EMP_021,33,Female,Finance,8,48,Full-time Remote,4,5,2,4,3,1
+EMP_022,43,Female,Engineering,1,45,Full-time Remote,3,5,2,2,2,1
+EMP_023,46,Male,HR,6,49,Hybrid,1,1,3,4,1,0
+EMP_024,48,Female,Engineering,1,47,Hybrid,3,1,5,5,5,0
+EMP_025,49,Female,HR,2,52,Hybrid,5,4,1,2,5,1
+EMP_026,37,Female,Marketing,1,40,Full-time Remote,4,5,1,3,1,1
+EMP_027,36,Female,Sales,11,37,Hybrid,3,2,4,3,1,0
+EMP_028,24,Female,Engineering,5,53,Hybrid,2,3,1,2,2,0
+EMP_029,58,Female,Operations,10,49,Hybrid,5,1,3,1,3,0
+EMP_030,28,Male,Finance,9,59,Hybrid,5,3,3,2,5,1
+EMP_031,42,Female,Marketing,6,57,Hybrid,3,3,1,5,2,1
+EMP_032,30,Non-binary,Engineering,11,39,Hybrid,3,4,1,1,3,1
+EMP_033,39,Male,Finance,11,44,Hybrid,4,5,4,3,2,1
+EMP_034,25,Male,Engineering,1,41,Hybrid,1,1,1,2,5,0
+EMP_035,46,Female,HR,13,59,Hybrid,3,3,4,4,1,0
+EMP_036,35,Male,Engineering,1,51,Full-time Remote,3,1,4,4,1,0
+EMP_037,30,Non-binary,Operations,2,41,Hybrid,2,2,1,5,3,1
+EMP_038,47,Male,Engineering,9,56,Hybrid,5,4,2,4,4,1
+EMP_039,23,Male,Engineering,3,46,Hybrid,1,2,2,2,3,0
+EMP_040,41,Female,Operations,1,59,Hybrid,2,1,4,2,4,0
+EMP_041,49,Male,Marketing,5,51,On-site,4,1,1,4,2,1
+EMP_042,28,Male,Engineering,7,47,On-site,4,5,2,2,2,1
+EMP_043,29,Female,Operations,6,54,Hybrid,3,3,1,5,5,1
+EMP_044,56,Female,Finance,12,59,Full-time Remote,3,3,1,1,4,0
+EMP_045,35,Male,HR,1,38,Hybrid,4,2,1,5,5,1
+EMP_046,38,Female,HR,5,44,Full-time Remote,3,4,5,5,1,1
+EMP_047,57,Female,Engineering,5,37,Hybrid,1,3,1,2,4,0
+EMP_048,25,Female,Marketing,6,43,On-site,3,5,5,1,3,0
+EMP_049,23,Male,Marketing,3,47,Full-time Remote,5,2,4,2,1,0
+EMP_050,27,Female,Finance,5,52,Full-time Remote,3,2,2,3,1,0
+EMP_051,25,Non-binary,Engineering,7,49,Full-time Remote,2,5,2,2,3,0
+EMP_052,50,Female,HR,5,38,Hybrid,1,4,2,2,1,0
+EMP_053,39,Female,Marketing,5,49,Hybrid,2,5,2,2,4,0
+EMP_054,47,Male,Engineering,5,56,Full-time Remote,2,4,2,1,5,0
+EMP_055,55,Male,Marketing,10,36,On-site,5,5,2,2,1,1
+EMP_056,31,Female,Operations,10,49,Hybrid,1,5,2,1,4,0
+EMP_057,57,Female,Marketing,3,42,Full-time Remote,1,1,4,4,2,0
+EMP_058,35,Female,HR,1,42,Hybrid,1,2,1,3,4,0
+EMP_059,52,Male,Sales,5,51,Hybrid,1,5,3,1,5,0
+EMP_060,36,Female,Finance,14,46,Hybrid,1,5,5,4,4,0
+EMP_061,29,Female,Finance,9,53,Full-time Remote,5,3,3,1,3,0
+EMP_062,35,Female,HR,14,44,Full-time Remote,3,2,3,1,5,0
+EMP_063,44,Male,Marketing,1,43,Full-time Remote,2,3,1,3,2,1
+EMP_064,42,Non-binary,Engineering,3,39,On-site,1,2,1,5,3,1
+EMP_065,37,Male,Marketing,13,40,On-site,3,3,1,5,4,1
+EMP_066,39,Male,HR,13,54,Full-time Remote,3,5,2,1,5,0
+EMP_067,45,Female,Finance,4,36,Full-time Remote,2,5,4,2,2,0
+EMP_068,47,Female,Marketing,14,58,Full-time Remote,5,1,2,4,3,1
+EMP_069,46,Female,Finance,1,47,Full-time Remote,4,3,4,2,2,0
+EMP_070,50,Male,Engineering,1,40,On-site,4,4,4,2,4,0
+EMP_071,36,Female,Finance,8,39,Hybrid,3,1,3,1,2,0
+EMP_072,22,Female,Finance,2,59,Hybrid,2,3,3,1,1,0
+EMP_073,46,Non-binary,Sales,12,35,Full-time Remote,4,3,4,1,3,0
+EMP_074,28,Male,Sales,8,55,Hybrid,3,1,4,1,2,0
+EMP_075,30,Male,Operations,7,56,Hybrid,5,5,2,5,4,1
+EMP_076,45,Male,Sales,10,55,Hybrid,4,3,2,1,4,0
+EMP_077,22,Male,Finance,10,40,Full-time Remote,3,5,3,5,2,1
+EMP_078,29,Female,HR,2,40,Hybrid,3,1,1,5,4,1
+EMP_079,45,Male,Finance,6,57,Hybrid,1,5,4,1,5,0
+EMP_080,32,Male,HR,6,50,Full-time Remote,5,2,2,3,5,1
+EMP_081,38,Female,HR,3,38,Hybrid,1,4,3,4,5,0
+EMP_082,29,Female,Sales,11,45,On-site,2,3,2,2,1,0
+EMP_083,56,Male,Marketing,2,58,On-site,1,4,4,5,2,0
+EMP_084,56,Male,Engineering,12,57,Hybrid,1,5,4,4,1,0
+EMP_085,54,Female,Sales,1,43,Hybrid,4,3,5,3,4,0
+EMP_086,26,Male,Sales,6,57,On-site,3,5,1,2,1,1
+EMP_087,49,Male,Marketing,12,37,Hybrid,5,2,5,2,4,0
+EMP_088,28,Male,Engineering,5,53,Full-time Remote,1,1,3,5,4,0
+EMP_089,30,Male,Finance,14,42,On-site,5,3,2,1,3,1
+EMP_090,29,Female,Operations,14,39,Full-time Remote,1,2,3,3,5,0
+EMP_091,33,Male,Operations,11,38,Hybrid,2,2,4,5,4,0
+EMP_092,55,Female,Finance,9,58,Full-time Remote,1,3,5,3,3,0
+EMP_093,54,Female,Sales,1,40,Full-time Remote,4,5,5,1,5,0
+EMP_094,44,Male,Engineering,7,36,Hybrid,3,2,5,1,4,0
+EMP_095,45,Male,Sales,5,54,Hybrid,2,4,3,5,4,1
+EMP_096,58,Male,HR,5,45,Full-time Remote,1,2,4,1,1,0
+EMP_097,56,Female,Sales,14,38,Full-time Remote,5,5,2,4,1,1
+EMP_098,43,Male,Sales,2,49,Full-time Remote,2,5,2,2,5,0
+EMP_099,48,Male,Finance,11,40,Hybrid,2,4,3,5,4,1
+EMP_100,56,Female,Finance,3,56,On-site,1,2,5,3,2,0
+EMP_101,22,Male,Finance,7,51,Hybrid,2,5,1,4,1,1
+EMP_102,56,Male,Operations,6,58,Hybrid,5,3,3,5,5,1
+EMP_103,58,Male,HR,12,40,On-site,2,1,3,1,4,0
+EMP_104,35,Male,Finance,2,53,Hybrid,5,1,4,1,4,0
+EMP_105,24,Female,Engineering,6,59,Full-time Remote,1,1,2,1,2,0
+EMP_106,22,Male,Operations,2,36,Full-time Remote,3,2,3,1,5,0
+EMP_107,26,Female,Marketing,2,49,Hybrid,2,4,3,3,4,0
+EMP_108,47,Male,Engineering,2,45,Hybrid,3,5,5,4,1,0
+EMP_109,35,Female,Engineering,14,42,Hybrid,5,3,5,2,2,0
+EMP_110,48,Male,Finance,11,53,Hybrid,2,3,1,3,5,1
+EMP_111,30,Male,Marketing,3,47,Hybrid,4,2,4,3,2,0
+EMP_112,36,Non-binary,Marketing,2,46,Hybrid,3,1,1,2,1,0
+EMP_113,36,Female,Operations,4,39,Hybrid,2,2,5,2,5,0
+EMP_114,47,Female,Marketing,9,40,Hybrid,3,4,2,1,2,0
+EMP_115,34,Male,HR,6,56,On-site,2,4,5,3,3,0
+EMP_116,53,Male,Finance,1,38,Hybrid,1,5,4,5,1,0
+EMP_117,53,Male,Marketing,8,53,Full-time Remote,3,5,5,2,1,0
+EMP_118,25,Female,Operations,12,54,Hybrid,4,4,4,2,1,0
+EMP_119,51,Male,HR,14,35,Hybrid,4,4,4,4,3,1
+EMP_120,58,Female,Sales,7,54,Hybrid,5,4,4,5,3,1
+EMP_121,44,Male,Sales,10,51,Hybrid,2,2,4,5,4,0
+EMP_122,36,Non-binary,HR,3,46,Hybrid,3,4,4,2,2,0
+EMP_123,50,Male,Operations,1,49,Hybrid,5,3,2,1,4,1
+EMP_124,57,Female,HR,5,35,Full-time Remote,3,1,1,4,2,1
+EMP_125,34,Male,Finance,13,48,Hybrid,2,4,3,5,3,1
+EMP_126,53,Male,Finance,4,40,Full-time Remote,4,1,1,2,3,0
+EMP_127,28,Female,Sales,10,39,Hybrid,1,2,4,5,4,0
+EMP_128,43,Male,Marketing,8,45,Full-time Remote,4,1,2,4,5,1
+EMP_129,49,Male,Operations,1,38,On-site,5,2,5,4,4,0
+EMP_130,23,Non-binary,Sales,10,47,Hybrid,1,3,2,3,2,0
+EMP_131,27,Female,Marketing,1,45,On-site,5,2,4,2,4,0
+EMP_132,49,Male,Marketing,12,37,On-site,2,2,2,4,1,0
+EMP_133,49,Male,Finance,4,35,On-site,1,5,2,3,2,0
+EMP_134,41,Male,Engineering,8,40,On-site,5,4,4,3,2,1
+EMP_135,51,Female,Engineering,5,52,Hybrid,2,4,2,5,5,1
+EMP_136,32,Male,HR,2,58,Hybrid,4,3,3,5,3,1
+EMP_137,49,Male,Finance,6,44,Full-time Remote,2,3,3,3,2,0
+EMP_138,46,Male,Marketing,5,39,Full-time Remote,3,4,2,5,3,1
+EMP_139,54,Male,Operations,2,57,Hybrid,2,5,5,4,4,0
+EMP_140,22,Female,Engineering,13,44,Hybrid,2,4,4,1,1,0
+EMP_141,48,Male,Marketing,14,46,Hybrid,3,5,3,4,5,1
+EMP_142,34,Female,Engineering,11,36,Hybrid,5,3,5,3,3,0
+EMP_143,24,Male,Engineering,11,47,On-site,5,1,2,3,2,1
+EMP_144,27,Male,Engineering,11,42,Hybrid,2,3,5,4,3,0
+EMP_145,29,Male,Operations,3,36,Hybrid,3,3,1,5,2,1
+EMP_146,48,Male,Finance,9,54,On-site,3,2,3,5,3,1
+EMP_147,30,Female,Operations,7,35,On-site,4,2,2,3,2,1
+EMP_148,58,Female,Sales,7,39,Hybrid,5,2,4,2,4,0
+EMP_149,54,Female,Marketing,11,43,On-site,1,2,2,5,2,0
+EMP_150,45,Female,Finance,6,51,On-site,5,5,4,4,2,1
+EMP_151,36,Male,Finance,8,43,On-site,5,4,2,5,1,1
+EMP_152,53,Female,Finance,4,45,Full-time Remote,4,1,5,4,2,0
+EMP_153,53,Male,Finance,8,49,Hybrid,1,3,5,3,1,0
+EMP_154,45,Female,Operations,4,58,Hybrid,4,5,5,5,5,1
+EMP_155,33,Male,Finance,8,40,Full-time Remote,1,1,1,4,1,0
+EMP_156,23,Male,HR,9,57,Hybrid,2,5,4,3,4,0
+EMP_157,24,Male,Marketing,3,37,Hybrid,1,5,5,2,1,0
+EMP_158,58,Male,Finance,3,51,On-site,4,3,1,4,5,1
+EMP_159,38,Male,Marketing,11,39,Full-time Remote,5,4,4,2,4,1
+EMP_160,23,Male,HR,13,46,On-site,1,2,2,2,3,0
+EMP_161,23,Non-binary,HR,2,52,Hybrid,1,4,1,1,3,0
+EMP_162,49,Male,Marketing,13,48,Hybrid,3,3,3,5,1,1
+EMP_163,44,Male,Engineering,10,55,On-site,5,3,1,4,1,1
+EMP_164,58,Female,Sales,3,58,Hybrid,2,3,1,2,5,0
+EMP_165,53,Female,Engineering,3,45,Hybrid,4,1,4,1,5,0
+EMP_166,54,Male,Engineering,5,43,On-site,2,4,2,3,2,0
+EMP_167,22,Male,Operations,5,36,Hybrid,5,4,3,4,5,1
+EMP_168,40,Female,Engineering,2,46,Full-time Remote,1,5,5,2,2,0
+EMP_169,23,Male,Finance,12,37,On-site,1,5,5,5,4,0
+EMP_170,47,Female,Operations,10,37,Hybrid,5,5,1,1,1,1
+EMP_171,53,Female,Operations,13,35,Hybrid,1,3,4,2,4,0
+EMP_172,27,Male,HR,6,42,Hybrid,1,4,4,5,5,0
+EMP_173,53,Male,Engineering,5,56,On-site,1,3,5,2,4,0
+EMP_174,25,Female,HR,6,42,Full-time Remote,4,1,3,4,4,0
+EMP_175,32,Female,Marketing,1,45,On-site,4,5,2,4,4,1
+EMP_176,38,Female,Sales,5,43,Hybrid,3,3,3,4,5,1
+EMP_177,59,Female,Operations,9,39,Full-time Remote,2,3,2,1,4,0
+EMP_178,45,Female,Marketing,12,48,Hybrid,5,1,5,4,2,0
+EMP_179,26,Female,Marketing,10,37,On-site,5,2,2,5,5,1
+EMP_180,55,Female,Finance,14,55,Hybrid,5,4,4,2,4,1
+EMP_181,27,Female,Sales,2,39,Full-time Remote,3,2,1,3,5,1
+EMP_182,43,Female,Marketing,1,39,Hybrid,4,5,1,5,3,1
+EMP_183,32,Female,Marketing,14,53,Hybrid,3,3,5,5,2,0
+EMP_184,37,Female,Sales,10,48,Hybrid,5,1,4,4,4,1
+EMP_185,54,Female,Sales,13,38,Hybrid,2,1,3,1,3,0
+EMP_186,30,Male,Marketing,11,59,Hybrid,1,4,4,2,3,0
+EMP_187,27,Female,Sales,9,47,Full-time Remote,4,2,1,1,5,0
+EMP_188,37,Female,Marketing,10,44,Hybrid,4,4,1,2,3,1
+EMP_189,50,Female,Marketing,9,59,Hybrid,3,3,4,2,2,0
+EMP_190,24,Female,Finance,9,52,Full-time Remote,4,4,4,1,2,0
+EMP_191,41,Female,Engineering,6,42,On-site,5,1,1,5,1,1
+EMP_192,57,Male,Marketing,8,42,Hybrid,5,1,3,2,2,0
+EMP_193,40,Male,HR,14,41,Hybrid,3,5,5,1,3,0
+EMP_194,47,Male,Operations,11,42,On-site,5,5,5,2,2,1
+EMP_195,24,Male,Engineering,13,48,Hybrid,2,3,4,3,5,0
+EMP_196,40,Male,Engineering,1,53,On-site,3,2,5,5,1,0
+EMP_197,41,Female,Engineering,10,40,Hybrid,2,4,1,4,3,1
+EMP_198,53,Male,Finance,4,35,Full-time Remote,1,3,1,2,1,0
+EMP_199,28,Female,Marketing,1,57,Hybrid,2,5,4,3,3,0
+EMP_200,54,Male,Finance,8,49,Hybrid,1,4,4,4,5,0

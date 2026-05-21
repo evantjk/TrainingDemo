@@ -19,7 +19,8 @@ from langchain_core.prompts import ChatPromptTemplate
 # ==========================================
 # 2. SETUP APP & LOAD LOCAL MODELS
 # ==========================================
-st.set_page_config(page_title="HR Chatbot Agent", page_icon="🤖")
+st.set_page_config(layout="wide", page_title="HR Analyzer", page_icon="📈")
+st.title("AI-Driven Corporate Sentiment & Engagement Analyzer")
 
 @st.cache_resource
 def load_all_models():
@@ -35,14 +36,11 @@ except FileNotFoundError:
     st.stop()
 
 # ==========================================
-# 3. CREATE THE "TOOL" FOR GEMINI TO USE
+# 3. CORE LOGIC FUNCTIONS
 # ==========================================
-@tool
-def calculate_burnout_risk(age: int, hours_worked: int, feedback_text: str) -> str:
-    """
-    Use this tool to calculate the psychological burnout risk of an employee.
-    Pass in their age, the hours they work per week, and any feedback text they provided.
-    """
+
+def calculate_single_employee_risk(age: int, hours_worked: int, feedback_text: str) -> dict:
+    """Core function to calculate risk for a single employee."""
     # 1. Process Tabular Data
     user_input = {
         'Age': age, 'Work_Hours_Per_Week': hours_worked, 'Years_at_Company': 3,
@@ -57,10 +55,10 @@ def calculate_burnout_risk(age: int, hours_worked: int, feedback_text: str) -> s
     tabular_prob = tabular_model.predict_proba(input_df)[0][1]
     
     # 2. Process Text Sentiment
-    if feedback_text.strip() == "":
+    if pd.isna(feedback_text) or str(feedback_text).strip() == "":
         nlp_result = {'label': 'POSITIVE', 'score': 0.5} 
     else:
-        nlp_result = nlp_model(feedback_text)[0]
+        nlp_result = nlp_model(str(feedback_text))[0]
         
     # 3. Merge Logic (Super Score)
     base_prob = tabular_prob
@@ -71,11 +69,26 @@ def calculate_burnout_risk(age: int, hours_worked: int, feedback_text: str) -> s
         
     final_percentage = unified_score * 100
     
-    # 4. Return Output to the LLM
-    if final_percentage >= 60.0:
-        return f"CRITICAL DISTRESS DETECTED. Risk Score: {final_percentage:.1f}%. The text analysis flagged negative sentiment."
+    status = "Critical" if final_percentage >= 60.0 else ("Warning" if final_percentage >= 40.0 else "Stable")
+    
+    return {
+        "Risk_Score": final_percentage,
+        "Sentiment": nlp_result['label'],
+        "Status": status
+    }
+
+@tool
+def calculate_burnout_risk_tool(age: int, hours_worked: int, feedback_text: str) -> str:
+    """
+    Use this tool to calculate the psychological burnout risk of an employee.
+    Pass in their age, the hours they work per week, and any feedback text they provided.
+    """
+    result = calculate_single_employee_risk(age, hours_worked, feedback_text)
+    
+    if result["Status"] == "Critical":
+        return f"CRITICAL DISTRESS DETECTED. Risk Score: {result['Risk_Score']:.1f}%. The text analysis flagged negative sentiment."
     else:
-        return f"STABLE ENVIRONMENT. Risk Score: {final_percentage:.1f}%. The text analysis was positive/neutral."
+        return f"STABLE ENVIRONMENT. Risk Score: {result['Risk_Score']:.1f}%. The text analysis was positive/neutral."
 
 # ==========================================
 # 4. INITIALIZE THE MODERN GEMINI LLM AGENT
@@ -85,12 +98,12 @@ def get_agent():
     # Initialize Gemini 2.5 Flash
     llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
     
-    tools = [calculate_burnout_risk]
+    tools = [calculate_burnout_risk_tool]
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     
     # Create a modern system prompt to guide the AI
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a highly professional HR AI Assistant. You evaluate employee burnout risk by using the calculate_burnout_risk tool. Always provide a clear, empathetic summary of the results."),
+        ("system", "You are a highly professional HR AI Assistant. You evaluate employee burnout risk by using the calculate_burnout_risk_tool tool. Always provide a clear, empathetic summary of the results."),
         ("placeholder", "{chat_history}"),
         ("human", "{input}"),
         ("placeholder", "{agent_scratchpad}"),
@@ -104,33 +117,86 @@ def get_agent():
 
 agent_executor = get_agent()
 
+
 # ==========================================
-# 5. BUILD THE STREAMLIT CHAT UI
+# 5. BUILD THE UNIFIED STREAMLIT UI
 # ==========================================
-st.title("🤖 HR Agentic Assistant (Powered by Gemini 2.5 Flash)")
-st.write("Chat with the AI. Ask it to evaluate an employee based on their age, hours worked, and their feedback.")
 
-# Manage chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": "Hello! I am your Multi-Modal HR AI Assistant. Tell me about an employee you'd like me to evaluate."}]
+# Create the Tabs
+tab1, tab2 = st.tabs(["📊 Analytics Dashboard", "🤖 AI Agent Chat"])
 
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
-
-# User Input
-if prompt := st.chat_input("E.g., Evaluate Sarah. She is 28, works 55 hours, and said 'I am completely overwhelmed.'"):
+# --- TAB 1: BATCH ANALYTICS DASHBOARD ---
+with tab1:
+    st.header("Department Overview & Batch Processing")
     
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
-
-    with st.chat_message("assistant"):
-        with st.spinner("Gemini is thinking and running your ML models..."):
-            try:
-                # Process through the Agentic LLM
-                response = agent_executor.invoke({"input": prompt})
-                output_text = response["output"]
+    uploaded_file = st.file_uploader("Upload Employee Data (CSV)", type="csv")
+    
+    if uploaded_file is not None:
+        # 1. Read Data
+        df = pd.read_csv(uploaded_file)
+        st.write("Raw Data Preview:", df.head())
+        
+        # 2. Process Data
+        if st.button("Process Batch Data"):
+            with st.spinner("Running Machine Learning Models..."):
+                results = []
+                for index, row in df.iterrows():
+                    # Safely handle missing columns
+                    age = row.get('Age', 30)
+                    hours = row.get('Work_Hours_Per_Week', 40)
+                    feedback = row.get('Feedback', "")
+                    
+                    calc_result = calculate_single_employee_risk(age, hours, feedback)
+                    
+                    row_data = row.to_dict()
+                    row_data.update(calc_result)
+                    results.append(row_data)
                 
-                st.write(output_text)
-                st.session_state.messages.append({"role": "assistant", "content": output_text})
-            except Exception as e:
-                st.error(f"An error occurred: {e}")
+                results_df = pd.DataFrame(results)
+                
+                # 3. Visualize Results
+                st.subheader("Analysis Results")
+                
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.write("Risk Distribution:")
+                    status_counts = results_df['Status'].value_counts()
+                    st.bar_chart(status_counts)
+                
+                with col2:
+                    st.write("Sentiment Distribution:")
+                    sentiment_counts = results_df['Sentiment'].value_counts()
+                    st.bar_chart(sentiment_counts)
+                
+                st.write("Comprehensive Report:")
+                st.dataframe(results_df)
+
+# --- TAB 2: AGENTIC LLM CHAT ---
+with tab2:
+    st.header("Interactive HR Assistant")
+    st.write("Ask the AI to evaluate an employee based on their age, hours worked, and their feedback.")
+
+    # Manage chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = [{"role": "assistant", "content": "Hello! I am your Multi-Modal HR AI Assistant. Tell me about an employee you'd like me to evaluate."}]
+
+    for msg in st.session_state.messages:
+        st.chat_message(msg["role"]).write(msg["content"])
+
+    # User Input
+    if prompt := st.chat_input("E.g., Evaluate Sarah. She is 28, works 55 hours, and said 'I am completely overwhelmed.'"):
+        
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.chat_message("user").write(prompt)
+
+        with st.chat_message("assistant"):
+            with st.spinner("Gemini is thinking and running your ML models..."):
+                try:
+                    # Process through the Agentic LLM
+                    response = agent_executor.invoke({"input": prompt})
+                    output_text = response["output"]
+                    
+                    st.write(output_text)
+                    st.session_state.messages.append({"role": "assistant", "content": output_text})
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")

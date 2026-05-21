@@ -5,14 +5,16 @@ import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 from transformers import pipeline
 
-# 1. SECURITY DEPLOYMENT (Hides your API Key)
+# 1. SECURITY DEPLOYMENT
 from dotenv import load_dotenv
-load_dotenv() # This automatically finds GOOGLE_API_KEY in your .env file!
+load_dotenv() 
 
+# NEW: Modern LangChain Imports
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.agents import initialize_agent, AgentType
+from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.tools import tool
 from langchain.memory import ConversationBufferMemory
+from langchain_core.prompts import ChatPromptTemplate
 
 # ==========================================
 # 2. SETUP APP & LOAD LOCAL MODELS
@@ -41,7 +43,6 @@ def calculate_burnout_risk(age: int, hours_worked: int, feedback_text: str) -> s
     Use this tool to calculate the psychological burnout risk of an employee.
     Pass in their age, the hours they work per week, and any feedback text they provided.
     """
-    # Process Tabular Data
     user_input = {
         'Age': age, 'Work_Hours_Per_Week': hours_worked, 'Years_at_Company': 3,
         'Screening_Stress_Level': 3, 'Screening_Sleep_Quality': 3,
@@ -54,13 +55,11 @@ def calculate_burnout_risk(age: int, hours_worked: int, feedback_text: str) -> s
     input_df = input_df.reindex(columns=model_cols, fill_value=0)
     tabular_prob = tabular_model.predict_proba(input_df)[0][1]
     
-    # Process Text Sentiment
     if feedback_text.strip() == "":
         nlp_result = {'label': 'POSITIVE', 'score': 0.5} 
     else:
         nlp_result = nlp_model(feedback_text)[0]
         
-    # Merge Logic
     base_prob = tabular_prob
     if nlp_result['label'] == 'NEGATIVE':
         unified_score = (base_prob * 0.4) + (nlp_result['score'] * 0.6)
@@ -75,28 +74,31 @@ def calculate_burnout_risk(age: int, hours_worked: int, feedback_text: str) -> s
         return f"STABLE ENVIRONMENT. Risk Score: {final_percentage:.1f}%. The text analysis was positive/neutral."
 
 # ==========================================
-# 4. INITIALIZE THE GEMINI LLM AGENT
+# 4. INITIALIZE THE MODERN GEMINI LLM AGENT
 # ==========================================
 @st.cache_resource
 def get_agent():
     # Initialize Gemini
     llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
     
-    # Memory and Tools
-    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     tools = [calculate_burnout_risk]
+    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     
-    # Create Agent
-    agent = initialize_agent(
-        tools, 
-        llm, 
-        agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION, 
-        memory=memory, 
-        verbose=True 
-    )
-    return agent
+    # NEW: Create a modern system prompt to guide the AI
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are a highly professional HR AI Assistant. You evaluate employee burnout risk by using the calculate_burnout_risk tool. Always provide a clear, empathetic summary of the results."),
+        ("placeholder", "{chat_history}"),
+        ("human", "{input}"),
+        ("placeholder", "{agent_scratchpad}"),
+    ])
+    
+    # NEW: Initialize the modern agent architecture
+    agent = create_tool_calling_agent(llm, tools, prompt)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, memory=memory, verbose=True)
+    
+    return agent_executor
 
-agent = get_agent()
+agent_executor = get_agent()
 
 # ==========================================
 # 5. BUILD THE STREAMLIT CHAT UI
@@ -118,8 +120,11 @@ if prompt := st.chat_input("E.g., Evaluate Sarah. She is 28, works 55 hours, and
     with st.chat_message("assistant"):
         with st.spinner("Gemini is thinking and running your ML models..."):
             try:
-                response = agent.run(prompt)
-                st.write(response)
-                st.session_state.messages.append({"role": "assistant", "content": response})
+                # NEW: Modern agents use .invoke() instead of .run()
+                response = agent_executor.invoke({"input": prompt})
+                output_text = response["output"]
+                
+                st.write(output_text)
+                st.session_state.messages.append({"role": "assistant", "content": output_text})
             except Exception as e:
                 st.error(f"An error occurred: {e}")

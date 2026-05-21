@@ -82,8 +82,8 @@ def calculate_burnout_risk(age: int, hours_worked: int, feedback_text: str) -> s
 # ==========================================
 @st.cache_resource
 def get_agent():
-    # Initialize Gemini using the latest tag
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0)
+    # Initialize Gemini 2.5 Flash
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
     
     tools = [calculate_burnout_risk]
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
@@ -107,7 +107,7 @@ agent_executor = get_agent()
 # ==========================================
 # 5. BUILD THE STREAMLIT CHAT UI
 # ==========================================
-st.title("🤖 HR Agentic Assistant (Powered by Gemini)")
+st.title("🤖 HR Agentic Assistant (Powered by Gemini 2.5 Flash)")
 st.write("Chat with the AI. Ask it to evaluate an employee based on their age, hours worked, and their feedback.")
 
 # Manage chat history

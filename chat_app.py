@@ -12,7 +12,7 @@ load_dotenv() # This automatically finds GOOGLE_API_KEY in your .env file!
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import initialize_agent, AgentType
 from langchain.tools import tool
-from langchain.memory.buffer import ConversationBufferMemory
+from langchain.memory import ConversationBufferMemory
 
 # ==========================================
 # 2. SETUP APP & LOAD LOCAL MODELS

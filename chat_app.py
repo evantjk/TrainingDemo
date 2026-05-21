@@ -83,7 +83,7 @@ def calculate_burnout_risk(age: int, hours_worked: int, feedback_text: str) -> s
 @st.cache_resource
 def get_agent():
     # Initialize Gemini using the latest tag
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest", temperature=0)
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0)
     
     tools = [calculate_burnout_risk]
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)

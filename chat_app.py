@@ -57,9 +57,23 @@ html, body, [data-testid="stAppViewContainer"] {
 /* Force the Re-open arrow (>) to stay visible and clickable */
 [data-testid="collapsedControl"] {
     z-index: 999999 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
+[data-testid="collapsedControl"] button {
+    background: #6366f1 !important;
+    border-color: #6366f1 !important;
+    color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
+[data-testid="collapsedControl"] button:hover {
+    background: #4f46e5 !important;
+    border-color: #4f46e5 !important;
 }
+
 [data-testid="stSidebar"] .stMarkdown p,
 [data-testid="stSidebar"] .stMarkdown span {
     color: #94a3b8 !important;

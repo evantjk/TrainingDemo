@@ -38,6 +38,22 @@ CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap');
 
+/* ── NAVIGATION BAR ── */
+[role="heading"] ~ [data-testid="column"] [data-testid="stButton"] {
+    z-index: 100 !important;
+}
+[data-testid="stButton"] button {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+}
+[data-testid="stButton"] button:hover {
+    transform: translateY(-2px) !important;
+}
+
 /* ── RESET & BASE ── */
 *, *::before, *::after { box-sizing: border-box; }
 html, body, [data-testid="stAppViewContainer"] {
@@ -204,6 +220,8 @@ button[kind="primary"] {
     box-shadow: 0 4px 14px rgba(99,102,241,0.32) !important;
     transition: all 0.2s !important;
     letter-spacing: 0.01em !important;
+    padding: 10px 16px !important;
+    cursor: pointer !important;
 }
 button[kind="primary"]:hover {
     box-shadow: 0 8px 22px rgba(99,102,241,0.48) !important;
@@ -357,6 +375,7 @@ _DEFAULTS = {
     "last_file_name": None,
     "critical_threshold": 60,
     "warning_threshold": 40,
+    "current_nav": "📊  Dashboard",
 }
 for _k, _v in _DEFAULTS.items():
     if _k not in st.session_state:
@@ -643,6 +662,47 @@ if not st.session_state.logged_in:
 # AUTHENTICATED APP
 # ─────────────────────────────────────────────────────────────
 
+# ── TOP NAVIGATION BAR ───────────────────────────────────────
+nav_tab1, nav_tab2, nav_tab3, nav_spacer = st.columns([1.2, 1.5, 1.2, 3])
+with nav_tab1:
+    if st.button("📊  Dashboard", key="nav_dash", use_container_width=True):
+        st.session_state.current_nav = "📊  Dashboard"
+        st.rerun()
+with nav_tab2:
+    if st.button("🔍  Individual Analysis", key="nav_indiv", use_container_width=True):
+        st.session_state.current_nav = "🔍  Individual Analysis"
+        st.rerun()
+with nav_tab3:
+    if st.button("🤖  AI Co-Pilot", key="nav_copilot", use_container_width=True):
+        st.session_state.current_nav = "🤖  AI Co-Pilot"
+        st.rerun()
+
+# Initialize current_nav if not set
+if "current_nav" not in st.session_state:
+    st.session_state.current_nav = "📊  Dashboard"
+
+nav = st.session_state.current_nav
+
+# Style the active button with custom CSS
+st.markdown(f"""
+<style>
+[data-testid="stButton"] button {{
+    border-radius: 10px !important;
+    border: none !important;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+}}
+[data-testid="stButton"] button:nth-child(1) {{
+    background: {"linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)" if nav == "📊  Dashboard" else "white"} !important;
+    color: {"white" if nav == "📊  Dashboard" else "#64748b"} !important;
+    border: 1.5px solid {"#6366f1" if nav == "📊  Dashboard" else "#e2e8f0"} !important;
+    box-shadow: {"0 4px 12px rgba(99,102,241,0.32)" if nav == "📊  Dashboard" else "none"} !important;
+}}
+</style>
+""", unsafe_allow_html=True)
+
+st.divider()
+
 # ── SIDEBAR ──────────────────────────────────────────────────
 with st.sidebar:
     # Logo + brand
@@ -669,14 +729,6 @@ with st.sidebar:
       <p style="margin:0.2rem 0 0;color:#e2e8f0;font-weight:600;font-size:0.9rem;">👤 {st.session_state.username.capitalize()}</p>
     </div>
     """, unsafe_allow_html=True)
-
-    # Navigation
-    st.markdown("<p style='font-size:0.68rem;text-transform:uppercase;letter-spacing:0.09em;color:#334155;margin:0 0 0.4rem;'>Navigation</p>", unsafe_allow_html=True)
-    nav = st.radio(
-        "nav",
-        ["📊  Dashboard", "🔍  Individual Analysis", "🤖  AI Co-Pilot"],
-        label_visibility="collapsed",
-    )
 
     st.divider()
 

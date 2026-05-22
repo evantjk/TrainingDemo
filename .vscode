@@ -1,0 +1,7 @@
+{
+    "python.analysis.indexing": false,
+    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "none"
+    }
+}

@@ -461,6 +461,10 @@ def get_agent():
     agent = create_tool_calling_agent(llm, tools, prompt)
     return AgentExecutor(agent=agent, tools=tools, memory=mem, verbose=False)
 
+# Store the agent inside the user's specific session state!
+if "agent_executor" not in st.session_state:
+    st.session_state.agent_executor = get_agent()
+
 
 agent_executor = get_agent()
 
@@ -1121,7 +1125,7 @@ elif nav == "🤖  AI Co-Pilot":
                 st.session_state.messages.append({"role": "user", "content": prompt_t})
                 with st.spinner("Analysing…"):
                     try:
-                        resp = agent_executor.invoke({"input": prompt_t})
+                        resp = st.session_state.agent_executor.invoke({"input": prompt_t})
                         reply = resp["output"]
                     except Exception as e:
                         reply = f"⚠️ Analysis error: {e}"
@@ -1183,7 +1187,7 @@ elif nav == "🤖  AI Co-Pilot":
         with st.chat_message("assistant", avatar="🤖"):
             with st.spinner("Analysing employee profile…"):
                 try:
-                    resp  = agent_executor.invoke({"input": user_input})
+                    resp  = st.session_state.agent_executor.invoke({"input": user_input})
                     reply = resp["output"]
                 except Exception as e:
                     reply = f"⚠️ Analysis error: {e}"

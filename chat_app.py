@@ -899,7 +899,7 @@ if nav == "📊  Dashboard":
     <div style="margin-bottom:1.5rem;">
       <h1>📊 Enterprise Dashboard</h1>
       <p style="color:#64748b;margin:0.3rem 0 0;font-size:1rem;">
-        Upload workforce survey data for AI-driven burnout & sentiment analysis
+        Upload workforce survey data for AI-driven burnout & sentiment analysis.
       </p>
     </div>
     """, unsafe_allow_html=True)

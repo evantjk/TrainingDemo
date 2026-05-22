@@ -19,6 +19,7 @@ from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.tools import tool
 from langchain.memory import ConversationBufferMemory
 from langchain_core.prompts import ChatPromptTemplate
+from openai import OpenAI
 
 # ─────────────────────────────────────────────────────────────
 # PAGE SETUP
@@ -481,15 +482,38 @@ def calculate_burnout_risk_tool(age: int, hours_worked: int, feedback_text: str)
     return " | ".join(lines)
 
 
+@tool
+def codex_code_generation_tool(prompt: str, language: str = "python") -> str:
+    """Uses OpenAI Codex to generate code snippets or provide technical assistance.
+    Args:
+        prompt: Detailed description of what code to generate
+        language: Programming language (python, javascript, sql, etc.)
+    """
+    try:
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        response = client.completions.create(
+            model="code-davinci-002",
+            prompt=f"# Language: {language}\n# Task: {prompt}\n",
+            max_tokens=500,
+            temperature=0.2,
+            top_p=0.95,
+        )
+        code = response.choices[0].text.strip()
+        return f"```{language}\n{code}\n```"
+    except Exception as e:
+        return f"❌ Codex error: {str(e)}. Ensure OPENAI_API_KEY is set in your .env file."
+
+
 @st.cache_resource
 def get_agent():
     llm   = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
-    tools = [calculate_burnout_risk_tool]
+    tools = [calculate_burnout_risk_tool, codex_code_generation_tool]
     mem   = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     prompt = ChatPromptTemplate.from_messages([
         ("system", (
             "You are NexaHR's enterprise AI assistant specialising in workforce wellbeing. "
             "Always use the calculate_burnout_risk_tool when evaluating a specific employee. "
+            "Use codex_code_generation_tool when asked to generate code or provide technical assistance. "
             "Structure your responses with: (1) Risk Assessment headline, (2) Score breakdown, "
             "(3) Evidence-based reasoning, (4) Concrete, actionable HR recommendations. "
             "Be concise, professional, and empathetic. Use markdown for clarity."

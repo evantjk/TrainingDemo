@@ -52,7 +52,7 @@ html, body, [data-testid="stAppViewContainer"] {
 [data-testid="stSidebar"] {
     background: #0b1120 !important;
     border-right: 1px solid rgba(255,255,255,0.06) !important;
-    min-width: 260px !important;
+}
 }
 [data-testid="stSidebar"] .stMarkdown p,
 [data-testid="stSidebar"] .stMarkdown span {

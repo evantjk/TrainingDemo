@@ -53,6 +53,12 @@ html, body, [data-testid="stAppViewContainer"] {
     background: #0b1120 !important;
     border-right: 1px solid rgba(255,255,255,0.06) !important;
 }
+
+/* Force the Re-open arrow (>) to stay visible and clickable */
+[data-testid="collapsedControl"] {
+    z-index: 999999 !important;
+}
+}
 }
 [data-testid="stSidebar"] .stMarkdown p,
 [data-testid="stSidebar"] .stMarkdown span {

@@ -376,6 +376,7 @@ _DEFAULTS = {
     "critical_threshold": 60,
     "warning_threshold": 40,
     "current_nav": "📊  Dashboard",
+    "menu_open": False,
 }
 for _k, _v in _DEFAULTS.items():
     if _k not in st.session_state:
@@ -662,46 +663,141 @@ if not st.session_state.logged_in:
 # AUTHENTICATED APP
 # ─────────────────────────────────────────────────────────────
 
+# Initialize current_nav and menu_open if not set
+if "current_nav" not in st.session_state:
+    st.session_state.current_nav = "📊  Dashboard"
+if "menu_open" not in st.session_state:
+    st.session_state.menu_open = False
+
+nav = st.session_state.current_nav
+
 # ── TOP NAVIGATION BAR ───────────────────────────────────────
-nav_tab1, nav_tab2, nav_tab3, nav_spacer = st.columns([1.2, 1.5, 1.2, 3])
-with nav_tab1:
+nav_col1, nav_col2, nav_col3, nav_spacer, menu_col = st.columns([1.2, 1.5, 1.2, 2.2, 0.9])
+
+with nav_col1:
     if st.button("📊  Dashboard", key="nav_dash", use_container_width=True):
         st.session_state.current_nav = "📊  Dashboard"
         st.rerun()
-with nav_tab2:
+with nav_col2:
     if st.button("🔍  Individual Analysis", key="nav_indiv", use_container_width=True):
         st.session_state.current_nav = "🔍  Individual Analysis"
         st.rerun()
-with nav_tab3:
+with nav_col3:
     if st.button("🤖  AI Co-Pilot", key="nav_copilot", use_container_width=True):
         st.session_state.current_nav = "🤖  AI Co-Pilot"
         st.rerun()
 
-# Initialize current_nav if not set
-if "current_nav" not in st.session_state:
-    st.session_state.current_nav = "📊  Dashboard"
-
-nav = st.session_state.current_nav
-
-# Style the active button with custom CSS
-st.markdown(f"""
-<style>
-[data-testid="stButton"] button {{
-    border-radius: 10px !important;
-    border: none !important;
-    font-weight: 600 !important;
-    transition: all 0.2s !important;
-}}
-[data-testid="stButton"] button:nth-child(1) {{
-    background: {"linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)" if nav == "📊  Dashboard" else "white"} !important;
-    color: {"white" if nav == "📊  Dashboard" else "#64748b"} !important;
-    border: 1.5px solid {"#6366f1" if nav == "📊  Dashboard" else "#e2e8f0"} !important;
-    box-shadow: {"0 4px 12px rgba(99,102,241,0.32)" if nav == "📊  Dashboard" else "none"} !important;
-}}
-</style>
-""", unsafe_allow_html=True)
+# Top-right menu
+with menu_col:
+    if st.button("☰ Menu", key="menu_toggle", use_container_width=True):
+        st.session_state.menu_open = not st.session_state.menu_open
 
 st.divider()
+
+# Menu dropdown
+if st.session_state.menu_open:
+    with st.container(border=True):
+        st.markdown("""
+        <style>
+        .menu-section {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .menu-header {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 0.4rem 0;
+            margin: 0;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+        
+        # Menu header
+        col_menu_left, col_menu_right = st.columns([3, 1])
+        with col_menu_left:
+            st.markdown(f"### ⚙️ Settings & Account", unsafe_allow_html=True)
+        with col_menu_right:
+            if st.button("✕", key="close_menu", help="Close menu"):
+                st.session_state.menu_open = False
+                st.rerun()
+        
+        st.divider()
+        
+        # User info card
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, #f0f9ff 0%, #eef2ff 100%);
+                    border-radius: 10px; padding: 1rem; margin-bottom: 1rem;
+                    border: 1px solid #c7d2fe;">
+          <p style="margin: 0 0 0.3rem 0; font-size: 0.75rem; color: #4f46e5; 
+                    text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Logged In As</p>
+          <p style="margin: 0; font-weight: 700; font-size: 1.1rem; color: #0f172a;">👤 {st.session_state.username.capitalize()}</p>
+          <p style="margin: 0.2rem 0 0; font-size: 0.85rem; color: #64748b;">Administrator · NexaHR Platform</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("<p class='menu-header'>⚙️ Settings</p>", unsafe_allow_html=True)
+        
+        set_col1, set_col2 = st.columns([1, 2])
+        with set_col1:
+            st.markdown("🔐")
+        with set_col2:
+            if st.button("Change Password", key="settings_pwd", use_container_width=True):
+                st.info("🔄 Password change feature coming soon")
+        
+        set_col3, set_col4 = st.columns([1, 2])
+        with set_col3:
+            st.markdown("📧")
+        with set_col4:
+            if st.button("Email Preferences", key="settings_email", use_container_width=True):
+                st.info("🔄 Email preferences coming soon")
+        
+        set_col5, set_col6 = st.columns([1, 2])
+        with set_col5:
+            st.markdown("🎨")
+        with set_col6:
+            if st.button("Theme & Display", key="settings_theme", use_container_width=True):
+                st.info("🔄 Theme customization coming soon")
+        
+        set_col7, set_col8 = st.columns([1, 2])
+        with set_col7:
+            st.markdown("🔔")
+        with set_col8:
+            if st.button("Notifications", key="settings_notif", use_container_width=True):
+                st.info("🔄 Notification settings coming soon")
+        
+        st.divider()
+        st.markdown("<p class='menu-header'>ℹ️ Help & Support</p>", unsafe_allow_html=True)
+        
+        help_col1, help_col2 = st.columns([1, 2])
+        with help_col1:
+            st.markdown("❓")
+        with help_col2:
+            if st.button("Documentation", key="help_docs", use_container_width=True):
+                st.info("📚 View help documentation")
+        
+        help_col3, help_col4 = st.columns([1, 2])
+        with help_col3:
+            st.markdown("💬")
+        with help_col4:
+            if st.button("Contact Support", key="help_support", use_container_width=True):
+                st.info("📧 support@nexahr.io")
+        
+        st.divider()
+        
+        # Logout button
+        st.markdown("<p class='menu-header'>🚪 Session</p>", unsafe_allow_html=True)
+        if st.button("🚪 Sign Out", key="menu_logout", use_container_width=True, type="primary"):
+            st.session_state.menu_open = False
+            for k in list(st.session_state.keys()):
+                del st.session_state[k]
+            st.rerun()
+
+# Regular divider when menu is closed
+if not st.session_state.menu_open:
+    pass
 
 # ── SIDEBAR ──────────────────────────────────────────────────
 with st.sidebar:
@@ -759,10 +855,15 @@ with st.sidebar:
         """, unsafe_allow_html=True)
 
     st.divider()
-    if st.button("🚪  Sign Out", use_container_width=True):
-        for k in list(st.session_state.keys()):
-            del st.session_state[k]
-        st.rerun()
+
+    # User profile info
+    st.markdown(f"""
+    <div style="background:#1a2540;border-radius:10px;padding:0.7rem 0.9rem;margin-bottom:0.75rem;border:1px solid #2d3f5c;">
+      <p style="margin:0;color:#475569;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;">Profile</p>
+      <p style="margin:0.2rem 0 0;color:#e2e8f0;font-weight:600;font-size:0.9rem;">👤 {st.session_state.username.capitalize()}</p>
+      <p style="margin:0.2rem 0 0;color:#94a3b8;font-size:0.75rem;">See menu for settings</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # ═════════════════════════════════════════════════════════════
